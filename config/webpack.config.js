@@ -1,4 +1,4 @@
-'use strict';
+
 
 const fs = require('fs');
 const isWsl = require('is-wsl');
@@ -46,6 +46,9 @@ const useTypeScript = fs.existsSync(paths.appTsConfig);
 
 // style files regexes
 const cssRegex = /\.css$/;
+const lessRegex = /\.less$/;
+const lessModuleRegex = /\.module\.less$/;
+
 const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
@@ -131,6 +134,13 @@ module.exports = function(webpackEnv) {
     }
     return loaders;
   };
+
+  const getLessLoader = (cssOptions, lessLoader) => {
+    const cssLoaders = getStyleLoaders(cssOptions)
+    cssLoaders.push(lessLoader)
+    return cssLoaders
+
+  }
 
   return {
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
@@ -360,7 +370,6 @@ module.exports = function(webpackEnv) {
                 customize: require.resolve(
                   'babel-preset-react-app/webpack-overrides'
                 ),
-                
                 plugins: [
                   [
                     require.resolve('babel-plugin-named-asset-import'),
@@ -373,6 +382,7 @@ module.exports = function(webpackEnv) {
                       },
                     },
                   ],
+                  ["import", { "libraryName": "antd", "libraryDirectory": "es", style: true}]
                 ],
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/
@@ -472,6 +482,48 @@ module.exports = function(webpackEnv) {
                 'sass-loader'
               ),
             },
+            {
+              test: lessRegex,
+              exclude: lessModuleRegex,
+              use: getLessLoader(
+                {
+                  importLoaders: 2,
+                  sourceMap: isEnvProduction && shouldUseSourceMap,
+                },
+                {
+                  loader: require.resolve('less-loader'),
+                  options: {
+                    modifyVars: {
+                      'primary-color': '#1DA57A',
+                    },
+                    javascriptEnabled: true,
+                  },
+                }
+                
+              ),
+              // Don't consider CSS imports dead code even if the
+              // containing package claims to have no side effects.
+              // Remove this when webpack adds a warning or an error for this.
+              // See https://github.com/webpack/webpack/issues/6571
+              sideEffects: true,
+            },
+            // {
+            //   test: lessModuleRegex,
+            //   use: getStyleLoaders(
+            //     { 
+            //       importLoaders: 2,
+            //       sourceMap: isEnvProduction && shouldUseSourceMap,
+            //       modules: true,
+            //       getLocalIdent: getCSSModuleLocalIdent,
+                  
+            //     }
+            //   ).push({
+            //       loader: require.resolve('css-loader'),
+            //       options: {
+                    
+            //       },
+            //   }),
+            // },
             // "file" loader makes sure those assets get served by WebpackDevServer.
             // When you `import` an asset, you get its (virtual) filename.
             // In production, they would get copied to the `build` folder.
