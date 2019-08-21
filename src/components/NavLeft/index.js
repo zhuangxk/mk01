@@ -1,7 +1,9 @@
 import React from 'react'
 import menuConfig from '../../config/menuConfig'
 import {Menu} from 'antd'
+import { Link } from "react-router-dom";
 const SubMenu = Menu.SubMenu
+
 export default class NavLeft extends React.Component{
     UNSAFE_componentWillMount(){
         const menuTreeNode = this.renderMenu(menuConfig)
@@ -21,7 +23,9 @@ export default class NavLeft extends React.Component{
             }
 
             return (
-                <Menu.Item key={item.key} > {item.title}</Menu.Item>
+                <Menu.Item key={item.key} > 
+                    <Link to={item.key}>{item.title}</Link> 
+                </Menu.Item>
             )
         })
     }
@@ -29,7 +33,7 @@ export default class NavLeft extends React.Component{
         return (
             <div>
                 <div className="logo">
-                    <img src="logo512.png" alt="logo"></img>
+                    <img src="/logo512.png" alt="logo"></img>
                     <h1>react app</h1>
                 </div>
                 <Menu theme="dark">
