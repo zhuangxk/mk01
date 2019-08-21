@@ -1,5 +1,6 @@
 .header{
     font-size: 18px;
+    background-color: #fff;
     .header-top{
         height: 60px;
         line-height: 60px;
@@ -16,8 +17,21 @@
         line-height: 40px;
         padding: 0 20px;
         background-color: #fff;
+        box-shadow: 2px 2px 5px #ddd;
+
         .breadcrumb-title{
             text-align: center;
+            &:after{
+                content: ' ';
+                position: absolute;
+                top:40px;
+                left:50%;
+                transform: translateX(-50%);
+                border-top: 15px solid #fff;
+                border-left: 12px solid transparent;
+                border-right: 12px solid transparent;
+
+            }
         }
         .breadcrumb-right{
             display: flex;
