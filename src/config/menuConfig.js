@@ -1,41 +1,41 @@
 const menuList = [
     {
         title: '首页',
-        key: '/admin/home'
+        key: '/'
     },
     {
         title: 'UI',
-        key: '/admin/ui',
+        key: '/ui',
         children: [
             {
                 title: '按钮',
-                key: '/admin/ui/buttons'
+                key: '/ui/buttons'
             },
             {
                 title: '弹框',
-                key: '/admin/ui/modals'
+                key: '/ui/modals'
             },
             {
                 title: 'loading',
-                key: '/admin/ui/loading'
+                key: '/ui/loading'
             }
         ]
     },
     {
         title: '表格',
-        key: '/admin/table',
+        key: '/table',
         children: [
             {
                 title: '表格1',
-                key: '/admin/table/1'
+                key: '/table/1'
             },
             {
                 title: '表格2',
-                key: '/admin/table/2'
+                key: '/table/2'
             },
             {
                 title: '表格3',
-                key: '/admin/table/3'
+                key: '/table/3'
             }
         ]
     }

@@ -23,7 +23,7 @@ export default class NavLeft extends React.Component{
             }
 
             return (
-                <Menu.Item key={item.key} > 
+                <Menu.Item key={item.key}> 
                     <NavLink to={item.key}>{item.title}</NavLink> 
                 </Menu.Item>
             )
@@ -36,7 +36,7 @@ export default class NavLeft extends React.Component{
                     <img src="/logo512.png" alt="logo"></img>
                     <h1>react app</h1>
                 </div>
-                <Menu theme="dark">
+                <Menu theme="dark" >
                     {this.state.menuTreeNode}
                 </Menu>
             </div>
